@@ -31,6 +31,9 @@ namespace GodRift.API.Models
             }
         }
 
+        public ICollection<PlayersMatchItems>? PlayersMatchItems { get; set; }
     }
 
+
 }
+

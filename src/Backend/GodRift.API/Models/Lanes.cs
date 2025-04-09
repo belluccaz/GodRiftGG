@@ -18,5 +18,7 @@ namespace GodRift.API.Models
                 LaneName = LaneId.ToString();
             }
         }
+
+        public ICollection<ChampionsOnLane>? ChampionsOnLane { get; set; }
     }
 }

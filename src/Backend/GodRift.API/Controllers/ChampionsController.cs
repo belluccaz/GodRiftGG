@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GodRift.API.Data;
-using GodRift.API.Models;
+using GodRiftGG.API.Data;
 using GodRiftGG.Models;
 
 namespace GodRift.API.Controllers;
@@ -10,9 +9,9 @@ namespace GodRift.API.Controllers;
 [Route("api/[controller]")]
 public class ChampionsController : ControllerBase
 {
-    private readonly GodRiftContext _context;
+    private readonly GodRiftGGContext _context;
 
-    public ChampionsController(GodRiftContext context)
+    public ChampionsController(GodRiftGGContext context)
     {
         _context = context;
     }

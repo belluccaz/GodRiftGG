@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GodRift.API.Data;
+using GodRiftGG.API.Data;
 using GodRift.API.Models;
 
 namespace GodRift.API.Controllers;
@@ -9,9 +9,9 @@ namespace GodRift.API.Controllers;
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly GodRiftContext _context;
+    private readonly GodRiftGGContext _context;
 
-    public UsersController(GodRiftContext context)
+    public UsersController(GodRiftGGContext context)
     {
         _context = context;
     }
@@ -19,13 +19,13 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
     {
-        return await _context.Userss.ToListAsync();
+        return await _context.Users.ToListAsync();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Users>> GetUser(int id)
     {
-        var user = await _context.Userss.FindAsync(id);
+        var user = await _context.Users.FindAsync(id);
         if (user == null) return NotFound();
         return user;
     }
@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
     public async Task<ActionResult<Users>> PostUser(Users user)
     {
         user.CreatedAt = DateTime.UtcNow;
-        _context.Userss.Add(user);
+        _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
     }
@@ -52,7 +52,7 @@ public class UsersController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Userss.Any(e => e.UserId == id)) return NotFound();
+            if (!_context.Users.Any(e => e.UserId == id)) return NotFound();
             else throw;
         }
 
@@ -62,10 +62,10 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        var user = await _context.Userss.FindAsync(id);
+        var user = await _context.Users.FindAsync(id);
         if (user == null) return NotFound();
 
-        _context.Userss.Remove(user);
+        _context.Users.Remove(user);
         await _context.SaveChangesAsync();
 
         return NoContent();

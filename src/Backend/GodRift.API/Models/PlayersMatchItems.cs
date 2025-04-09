@@ -9,18 +9,10 @@ namespace GodRift.API.Models
     {
         [Key]
         public long PlayersMatchId { get; set; }
+        public MatchPlayers? MatchPlayer { get; set; }
         public int ItemId { get; set; }
-        public int Slot { get; set; }
-        public string SlotCategory { get; set; }
-
-        public PlayersMatchItems()
-        {
-            if (SlotCategory == null)
-            {
-                SlotCategory = "";
-            }
-        }
+        public Items? Item { get; set; } = null!;
+        public int? Slot { get; set; }
+        public string? SlotCategory { get; set; }
     }
-
-
 }

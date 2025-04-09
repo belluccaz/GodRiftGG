@@ -13,7 +13,7 @@ namespace GodRift.API.Models
 
         public string GameMode { get; set; }
 
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
 
         public Matches()
         {
@@ -22,6 +22,7 @@ namespace GodRift.API.Models
                 GameMode = "";
             }
         }
+        public ICollection<MatchPlayers>? MatchPlayers { get; set; }
     }
 
 }

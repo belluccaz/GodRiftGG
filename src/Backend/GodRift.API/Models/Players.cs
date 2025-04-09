@@ -16,6 +16,12 @@ namespace GodRift.API.Models
         public int MatchesWon { get; set; }
         public int MatchesLost { get; set; }
 
+        [NotMapped]
+        public int MatchesPlayed => MatchesWon + MatchesLost;
+
+        //FK And Navigation
+        public long? UserId { get; set; }
+        public Users? User { get; set; }
         public Players()
         {
             if (Nick == null)
@@ -31,5 +37,7 @@ namespace GodRift.API.Models
                 Rank = "Unranked";
             }
         }
+
+        public ICollection<MatchPlayers>? MatchPlayers { get; set; }
     }
 }

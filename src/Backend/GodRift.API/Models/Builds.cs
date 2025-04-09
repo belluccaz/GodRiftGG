@@ -1,22 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using GodRiftGG.Models;
 
-namespace GodRiftGG.Models
+public class Builds
 {
-    [Table("Builds")]
-    public class Builds
-    {
-        [Key]
-        public long BuildId { get; set; }
-        public string Name { get; set; }
-        public int ChampionId { get; set; }
-
-        public Builds()
-        {
-            if (Name == null)
-            {
-                Name = ChampionId.ToString();
-            }
-        }
-    }
+    public long BuildId { get; set; }
+    public string Name { get; set; } = null!;
+    public long ChampionId { get; set; }
+    public Champions Champion { get; set; } = null!;
 }
