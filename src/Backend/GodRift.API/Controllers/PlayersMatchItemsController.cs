@@ -17,29 +17,29 @@ public class PlayersMatchItemsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PlayersMatchItems>>> GetPlayersMatchItems()
+    public async Task<ActionResult<IEnumerable<PlayersMatchItem>>> GetPlayersMatchItems()
     {
-        return await _context.PlayersMatchItems.ToListAsync();
+        return await _context.PlayerMatchItems.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PlayersMatchItems>> GetPlayersMatchItem(int id)
+    public async Task<ActionResult<PlayersMatchItem>> GetPlayersMatchItem(int id)
     {
-        var item = await _context.PlayersMatchItems.FindAsync(id);
+        var item = await _context.PlayerMatchItems.FindAsync(id);
         if (item == null) return NotFound();
         return item;
     }
 
     [HttpPost]
-    public async Task<ActionResult<PlayersMatchItems>> PostPlayersMatchItem(PlayersMatchItems item)
+    public async Task<ActionResult<PlayersMatchItem>> PostPlayersMatchItem(PlayersMatchItem item)
     {
-        _context.PlayersMatchItems.Add(item);
+        _context.PlayerMatchItems.Add(item);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetPlayersMatchItem), new { id = item.ItemId }, item);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPlayersMatchItem(int id, PlayersMatchItems item)
+    public async Task<IActionResult> PutPlayersMatchItem(int id, PlayersMatchItem item)
     {
         if (id != item.ItemId) return BadRequest();
 
@@ -51,7 +51,7 @@ public class PlayersMatchItemsController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.PlayersMatchItems.Any(e => e.ItemId == id)) return NotFound();
+            if (!_context.PlayerMatchItems.Any(e => e.ItemId == id)) return NotFound();
             else throw;
         }
 
@@ -61,10 +61,10 @@ public class PlayersMatchItemsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletePlayersMatchItem(int id)
     {
-        var item = await _context.PlayersMatchItems.FindAsync(id);
+        var item = await _context.PlayerMatchItems.FindAsync(id);
         if (item == null) return NotFound();
 
-        _context.PlayersMatchItems.Remove(item);
+        _context.PlayerMatchItems.Remove(item);
         await _context.SaveChangesAsync();
 
         return NoContent();

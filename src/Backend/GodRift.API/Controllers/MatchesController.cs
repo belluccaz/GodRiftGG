@@ -7,39 +7,39 @@ namespace GodRift.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MatchesController : ControllerBase
+public class MatchController : ControllerBase
 {
     private readonly GodRiftGGContext _context;
 
-    public MatchesController(GodRiftGGContext context)
+    public MatchController(GodRiftGGContext context)
     {
         _context = context;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Matches>>> GetMatches()
+    public async Task<ActionResult<IEnumerable<Match>>> GetMatch()
     {
-        return await _context.Matches.ToListAsync();
+        return await _context.Match.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Matches>> GetMatch(int id)
+    public async Task<ActionResult<Match>> GetMatch(int id)
     {
-        var match = await _context.Matches.FindAsync(id);
+        var match = await _context.Match.FindAsync(id);
         if (match == null) return NotFound();
         return match;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Matches>> PostMatch(Matches match)
+    public async Task<ActionResult<Match>> PostMatch(Match match)
     {
-        _context.Matches.Add(match);
+        _context.Match.Add(match);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetMatch), new { id = match.MatchId }, match);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMatch(int id, Matches match)
+    public async Task<IActionResult> PutMatch(int id, Match match)
     {
         if (id != match.MatchId) return BadRequest();
 
@@ -51,7 +51,7 @@ public class MatchesController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Matches.Any(e => e.MatchId == id)) return NotFound();
+            if (!_context.Match.Any(e => e.MatchId == id)) return NotFound();
             else throw;
         }
 
@@ -61,10 +61,10 @@ public class MatchesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMatch(int id)
     {
-        var match = await _context.Matches.FindAsync(id);
+        var match = await _context.Match.FindAsync(id);
         if (match == null) return NotFound();
 
-        _context.Matches.Remove(match);
+        _context.Match.Remove(match);
         await _context.SaveChangesAsync();
 
         return NoContent();

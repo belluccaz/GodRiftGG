@@ -16,29 +16,29 @@ public class BuildsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Builds>>> GetBuilds()
+    public async Task<ActionResult<IEnumerable<Build>>> GetBuilds()
     {
-        return await _context.Builds.ToListAsync();
+        return await _context.Build.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Builds>> GetBuild(int id)
+    public async Task<ActionResult<Build>> GetBuild(int id)
     {
-        var build = await _context.Builds.FindAsync(id);
+        var build = await _context.Build.FindAsync(id);
         if (build == null) return NotFound();
         return build;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Builds>> PostBuild(Builds build)
+    public async Task<ActionResult<Build>> PostBuild(Build build)
     {
-        _context.Builds.Add(build);
+        _context.Build.Add(build);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetBuild), new { id = build.BuildId }, build);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutBuild(int id, Builds build)
+    public async Task<IActionResult> PutBuild(int id, Build build)
     {
         if (id != build.BuildId) return BadRequest();
 
@@ -50,7 +50,7 @@ public class BuildsController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Builds.Any(e => e.BuildId == id)) return NotFound();
+            if (!_context.Build.Any(e => e.BuildId == id)) return NotFound();
             else throw;
         }
 
@@ -60,10 +60,10 @@ public class BuildsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBuild(int id)
     {
-        var build = await _context.Builds.FindAsync(id);
+        var build = await _context.Build.FindAsync(id);
         if (build == null) return NotFound();
 
-        _context.Builds.Remove(build);
+        _context.Build.Remove(build);
         await _context.SaveChangesAsync();
 
         return NoContent();

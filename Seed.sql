@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS `GodRift`;
 USE `GodRift`;
 
 CREATE TABLE [dbo].[Users] (
-    [User]         BIGINT        IDENTITY (1, 1) NOT NULL,
+    [UserId]         BIGINT        IDENTITY (1, 1) NOT NULL,
     [Name]         VARCHAR (100) NOT NULL,
     [Email]        VARCHAR (150) NOT NULL,
     [HashPassword] VARCHAR (255) NOT NULL,

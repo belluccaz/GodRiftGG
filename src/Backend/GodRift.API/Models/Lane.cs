@@ -5,13 +5,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GodRift.API.Models
 {
     [Table("Lanes")]
-    public class Lanes
+    public class Lane
     {
         [Key]
         public int LaneId { get; set; }
+
+        [Required]
+        [MaxLength(50)]
         public string LaneName { get; set; }
 
-        public Lanes()
+        public Lane()
         {
             if (LaneName == null)
             {
@@ -19,6 +22,6 @@ namespace GodRift.API.Models
             }
         }
 
-        public ICollection<ChampionsOnLane>? ChampionsOnLane { get; set; }
+        public ICollection<ChampionsOnLane>? ChampionsOnLanes { get; set; }
     }
 }

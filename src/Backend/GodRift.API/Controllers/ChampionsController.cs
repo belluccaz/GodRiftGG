@@ -17,29 +17,29 @@ public class ChampionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Champions>>> GetChampions()
+    public async Task<ActionResult<IEnumerable<Champion>>> GetChampions()
     {
-        return await _context.Champions.ToListAsync();
+        return await _context.Champion.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Champions>> GetChampion(int id)
+    public async Task<ActionResult<Champion>> GetChampion(int id)
     {
-        var champion = await _context.Champions.FindAsync(id);
+        var champion = await _context.Champion.FindAsync(id);
         if (champion == null) return NotFound();
         return champion;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Champions>> PostChampion(Champions champion)
+    public async Task<ActionResult<Champion>> PostChampion(Champion champion)
     {
-        _context.Champions.Add(champion);
+        _context.Champion.Add(champion);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetChampion), new { id = champion.ChampionId }, champion);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutChampion(int id, Champions champion)
+    public async Task<IActionResult> PutChampion(int id, Champion champion)
     {
         if (id != champion.ChampionId) return BadRequest();
 
@@ -51,7 +51,7 @@ public class ChampionsController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Champions.Any(e => e.ChampionId == id)) return NotFound();
+            if (!_context.Champion.Any(e => e.ChampionId == id)) return NotFound();
             else throw;
         }
 
@@ -61,10 +61,10 @@ public class ChampionsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteChampion(int id)
     {
-        var champion = await _context.Champions.FindAsync(id);
+        var champion = await _context.Champion.FindAsync(id);
         if (champion == null) return NotFound();
 
-        _context.Champions.Remove(champion);
+        _context.Champion.Remove(champion);
         await _context.SaveChangesAsync();
 
         return NoContent();

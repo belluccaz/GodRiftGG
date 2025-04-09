@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GodRiftGG.API.Data;
 using GodRift.API.Models;
+using GodRiftGG.API.Models;
+using AutoMapper;
+using GodRift.API.DTOs;
 
 namespace GodRift.API.Controllers;
 
@@ -10,41 +13,53 @@ namespace GodRift.API.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly GodRiftGGContext _context;
+    private readonly IMapper _mapper;
 
-    public UsersController(GodRiftGGContext context)
+    public UsersController(GodRiftGGContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
     {
-        return await _context.Users.ToListAsync();
+        var users = await _context.User
+            .AsNoTracking()
+            .ToListAsync();
+        return Ok(_mapper.Map<IEnumerable<UserDTO>>(users));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Users>> GetUser(int id)
+    public async Task<ActionResult<UserDTO>> GetUser(long id)
     {
-        var user = await _context.Users.FindAsync(id);
-        if (user == null) return NotFound();
-        return user;
+        var user = await _context.User.FindAsync(id);
+        if (user == null)
+            return NotFound();
+
+        return Ok(_mapper.Map<UserDTO>(user));
     }
 
     [HttpPost]
-    public async Task<ActionResult<Users>> PostUser(Users user)
+    public async Task<ActionResult<User>> PostUser(User user)
     {
         user.CreatedAt = DateTime.UtcNow;
-        _context.Users.Add(user);
+        _context.User.Add(user);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutUser(int id, Users user)
+    public async Task<IActionResult> PutUser(long id, UpdateUserDTO userDto)
     {
-        if (id != user.UserId) return BadRequest();
+        if (id != userDto.UserId)
+            return BadRequest();
 
-        _context.Entry(user).State = EntityState.Modified;
+        var user = await _context.User.FindAsync(id);
+        if (user == null)
+            return NotFound();
+
+        _mapper.Map(userDto, user);
 
         try
         {
@@ -52,8 +67,9 @@ public class UsersController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.Users.Any(e => e.UserId == id)) return NotFound();
-            else throw;
+            if (!await UserExists(id))
+                return NotFound();
+            throw;
         }
 
         return NoContent();
@@ -62,12 +78,17 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.User.FindAsync(id);
         if (user == null) return NotFound();
 
-        _context.Users.Remove(user);
+        _context.User.Remove(user);
         await _context.SaveChangesAsync();
 
         return NoContent();
+    }
+
+    private async Task<bool> UserExists(long id)
+    {
+        return await _context.User.AnyAsync(e => e.UserId == id);
     }
 }

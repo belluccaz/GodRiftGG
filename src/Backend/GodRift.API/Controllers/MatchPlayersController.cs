@@ -7,39 +7,39 @@ namespace GodRift.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MatchPlayersController : ControllerBase
+public class MatchPlayerController : ControllerBase
 {
     private readonly GodRiftGGContext _context;
 
-    public MatchPlayersController(GodRiftGGContext context)
+    public MatchPlayerController(GodRiftGGContext context)
     {
         _context = context;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MatchPlayers>>> GetMatchPlayers()
+    public async Task<ActionResult<IEnumerable<MatchPlayer>>> GetMatchPlayer()
     {
-        return await _context.MatchPlayers.ToListAsync();
+        return await _context.MatchPlayer.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<MatchPlayers>> GetMatchPlayer(int id)
+    public async Task<ActionResult<MatchPlayer>> GetMatchPlayer(int id)
     {
-        var matchPlayer = await _context.MatchPlayers.FindAsync(id);
+        var matchPlayer = await _context.MatchPlayer.FindAsync(id);
         if (matchPlayer == null) return NotFound();
         return matchPlayer;
     }
 
     [HttpPost]
-    public async Task<ActionResult<MatchPlayers>> PostMatchPlayer(MatchPlayers matchPlayer)
+    public async Task<ActionResult<MatchPlayer>> PostMatchPlayer(MatchPlayer matchPlayer)
     {
-        _context.MatchPlayers.Add(matchPlayer);
+        _context.MatchPlayer.Add(matchPlayer);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetMatchPlayer), new { id = matchPlayer.PlayerId }, matchPlayer);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMatchPlayer(int id, MatchPlayers matchPlayer)
+    public async Task<IActionResult> PutMatchPlayer(int id, MatchPlayer matchPlayer)
     {
         if (id != matchPlayer.PlayerId) return BadRequest();
 
@@ -51,7 +51,7 @@ public class MatchPlayersController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!_context.MatchPlayers.Any(e => e.PlayerId == id)) return NotFound();
+            if (!_context.MatchPlayer.Any(e => e.PlayerId == id)) return NotFound();
             else throw;
         }
 
@@ -61,10 +61,10 @@ public class MatchPlayersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMatchPlayer(int id)
     {
-        var matchPlayer = await _context.MatchPlayers.FindAsync(id);
+        var matchPlayer = await _context.MatchPlayer.FindAsync(id);
         if (matchPlayer == null) return NotFound();
 
-        _context.MatchPlayers.Remove(matchPlayer);
+        _context.MatchPlayer.Remove(matchPlayer);
         await _context.SaveChangesAsync();
 
         return NoContent();
