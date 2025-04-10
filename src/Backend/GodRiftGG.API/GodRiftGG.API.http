@@ -1,0 +1,6 @@
+@GodRiftGG.API_HostAddress = http://localhost:5282
+
+GET {{GodRiftGG.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
