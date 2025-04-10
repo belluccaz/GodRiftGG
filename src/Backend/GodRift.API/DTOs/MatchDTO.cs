@@ -1,4 +1,5 @@
 using System;
+using GodRift.API.Models;
 
 namespace GodRiftGG.API.DTOs;
 
@@ -8,12 +9,7 @@ public class ReadMatchDTO
     public DateTime MatchDate { get; set; }
     public string? GameMode { get; set; }
     public int? Duration { get; set; }
+    public ICollection<MatchPlayer>? Players { get; set; }
 }
 
-public class CreateMatchDTO
-{
-    public DateTime MatchDate { get; set; }
-    public string? GameMode { get; set; }
-    public int? Duration { get; set; }
-}
 

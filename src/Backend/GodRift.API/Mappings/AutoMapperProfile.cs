@@ -1,6 +1,8 @@
 using AutoMapper;
 using GodRift.API.Models;
 using GodRift.API.DTOs;
+using GodRiftGG.API.Models;
+using GodRiftGG.API.DTOs;
 
 namespace GodRift.API.Mappings
 {
@@ -8,12 +10,14 @@ namespace GodRift.API.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<Players, PlayerDTO>();
-            CreateMap<CreatePlayerDTO, Players>();
-            CreateMap<Users, UserDTO>();
-            CreateMap<CreateUserDTO, Users>()
+            CreateMap<Player, PlayerDTO>();
+            CreateMap<CreatePlayerDTO, Player>();
+            CreateMap<User, UserDTO>();
+            CreateMap<CreateUserDTO, User>()
                 .ForMember(dest => dest.HashPassword, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
+            CreateMap<Lane, ReadLaneDTO>();
+            CreateMap<ReadLaneDTO, Lane>();
         }
     }
 }

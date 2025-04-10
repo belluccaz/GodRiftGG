@@ -40,15 +40,6 @@ public class UsersController : ControllerBase
         return Ok(_mapper.Map<UserDTO>(user));
     }
 
-    [HttpPost]
-    public async Task<ActionResult<User>> PostUser(User user)
-    {
-        user.CreatedAt = DateTime.UtcNow;
-        _context.User.Add(user);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
-    }
-
     [HttpPut("{id}")]
     public async Task<IActionResult> PutUser(long id, UpdateUserDTO userDto)
     {
@@ -71,18 +62,6 @@ public class UsersController : ControllerBase
                 return NotFound();
             throw;
         }
-
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(int id)
-    {
-        var user = await _context.User.FindAsync(id);
-        if (user == null) return NotFound();
-
-        _context.User.Remove(user);
-        await _context.SaveChangesAsync();
 
         return NoContent();
     }

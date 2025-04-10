@@ -18,4 +18,6 @@ namespace GodRift.API.Models
         public double? BanRate { get; set; }
     }
 
+
+
 }

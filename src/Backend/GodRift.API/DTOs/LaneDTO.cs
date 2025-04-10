@@ -8,8 +8,5 @@ public class ReadLaneDTO
     public required string LaneName { get; set; }
 }
 
-public class CreateLaneDTO
-{
-    public required string LaneName { get; set; }
-}
+
 

@@ -14,11 +14,4 @@ namespace GodRift.API.DTOs
         public int MatchesPlayed => MatchesWon + MatchesLost;
         public long? UserId { get; set; }
     }
-    public class CreatePlayerDTO
-    {
-        public required string Nick { get; set; }
-        public required string Tag { get; set; }
-        public required string Server { get; set; }
-        public required string Rank { get; set; }
-    }
 }

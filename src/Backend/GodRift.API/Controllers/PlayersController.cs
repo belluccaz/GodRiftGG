@@ -2,6 +2,7 @@ using AutoMapper;
 using GodRift.API.DTOs;
 using GodRift.API.Models;
 using GodRiftGG.API.Data;
+using GodRiftGG.API.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
