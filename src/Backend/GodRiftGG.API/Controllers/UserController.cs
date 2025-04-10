@@ -1,3 +1,5 @@
+using GodRiftGG.Application.Services;
+using GodRiftGG.Application.UseCases.User.Register;
 using GodRiftGG.Communication.Requests;
 using GodRiftGG.Communication.Responses;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +15,11 @@ namespace GodRiftGG.API.Controllers
         [ProducesResponseType(typeof(ResponseRegisteredUserJson), StatusCodes.Status201Created)]
         public IActionResult Register(RequestRegisterUserJson request)
         {
-            return Created();
+            var passwordHasher = HttpContext.RequestServices.GetService<IPasswordHasher>();
+            var useCase = new RegisterUserUseCase(passwordHasher ?? throw new ArgumentNullException(nameof(passwordHasher)));
+            var result = useCase.Execute(request);
+
+            return Created(string.Empty, result);
         }
     }
 }
