@@ -1,4 +1,4 @@
-# GodRift.API
+# GodRift.API - (in development)
 
 GodRift.API is a RESTful Web API built with ASP.NET Core and Entity Framework Core. It serves as the backend for a project that manages data related to players, champions, builds, lanes, and match histories — inspired by Wild Rift.
 
