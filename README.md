@@ -18,6 +18,7 @@ This API currently supports:
 - **Entity Framework Core**
 - **SQL Server** (via Docker)
 - **Swagger** for API documentation and testing
+- **Made WITH AI** in some steps of development.
 
 ## 📂 Project Structure
 
